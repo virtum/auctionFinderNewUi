@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
@@ -24,7 +25,13 @@ import { AccountComponent } from './account/account.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    RouterModule.forRoot([
+      { path: 'home', component: HomeComponent },
+      { path: 'account', component: AccountComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', redirectTo: 'home', pathMatch: 'full' }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

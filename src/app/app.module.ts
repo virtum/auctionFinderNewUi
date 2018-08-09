@@ -6,19 +6,32 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
 @NgModule({
   exports: [
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class MaterialModule { }
 
-import { HomeComponent } from './home/home.component';
+import { HomeComponent, DialogComponent } from './home/home.component';
 import { AccountComponent } from './account/account.component';
 
 @NgModule({
@@ -26,6 +39,7 @@ import { AccountComponent } from './account/account.component';
     AppComponent,
     SideNavComponent,
     HomeComponent,
+    DialogComponent,
     AccountComponent
   ],
   imports: [
@@ -33,6 +47,7 @@ import { AccountComponent } from './account/account.component';
     BrowserAnimationsModule,
     MaterialModule,
     LayoutModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'account', component: AccountComponent },
@@ -40,6 +55,7 @@ import { AccountComponent } from './account/account.component';
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ])
   ],
+  entryComponents: [HomeComponent, DialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

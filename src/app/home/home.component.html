@@ -20,5 +20,14 @@
       <button mat-raised-button color="primary" (click)="openDialog()">Znajdź przedmiot</button>
     </div>
 
+    <ol>
+      <li>
+        <button mat-raised-button (click)="openDialog()">Pick one</button>
+      </li>
+      <li *ngIf="animal">
+        You chose: <i>{{animal}}</i>
+      </li>
+    </ol>
+
   </div>
 </main>

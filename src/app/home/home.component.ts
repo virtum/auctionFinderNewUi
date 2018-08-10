@@ -16,12 +16,15 @@ export class HomeComponent {
   email: string;
   item: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
 
   openDialog(): void {
+    this.email = "";
+    this.item = "";
+    
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
-      data: {item: this.item, email: this.email}
+      data: { item: this.item, email: this.email }
     });
 
     dialogRef.afterClosed().subscribe(input => {
@@ -41,7 +44,7 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

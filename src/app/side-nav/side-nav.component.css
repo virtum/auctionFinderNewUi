@@ -1,5 +1,6 @@
 .sidenav-container {
   height: 100%;
+  background-color: white;
 }
 
 .sidenav {
@@ -9,5 +10,6 @@
 
 #content {
   width: auto;
+  height: auto;
   margin: 100px;
 }

@@ -20,9 +20,6 @@ export class HomeComponent {
   constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private http: Http) { }
 
   openDialog(): void {
-    this.email = "";
-    this.item = "";
-
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
       data: { item: this.item, email: this.email }
@@ -30,18 +27,18 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(input => {
       if (input != undefined) {
-        // this.email = input.email;
-        // this.item = input.item;
-
         let requestModel: FindRequestModel = {
-          item: this.item,
-          email: this.email
+          item: input.item,
+          email: input.email
         };
+
+        this.email = "";
+        this.item = "";
 
         this
           .sendNewAuction(requestModel)
           .subscribe(response => {
-            // TODO add toas for success
+            // TODO add toast for success
             console.log(response);
           });
       }

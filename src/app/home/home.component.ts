@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { Observable, throwError } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
@@ -17,7 +17,7 @@ export class HomeComponent {
   email: string;
   item: string;
 
-  constructor(public dialog: MatDialog, private http: Http) { }
+  constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private http: Http) { }
 
   openDialog(): void {
     this.email = "";
@@ -61,6 +61,11 @@ export class HomeComponent {
       }))
       .pipe(catchError(error => {
         // TODO add toast for error here
+        this.snackBar.open("message", "action", {
+          duration: 4000,
+          panelClass: ['red-snackbar']
+        });
+
         return throwError(error);
       }));
   }

@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DialogModel } from './dialog/dialogModel';
 import { DialogComponent } from './dialog/dialog.component';
+import { Observable, throwError } from 'rxjs';
+import { Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
+import { map, catchError } from 'rxjs/operators';
+import { FindRequestModel } from './findRequestModel';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +17,7 @@ export class HomeComponent {
   email: string;
   item: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private http: Http) { }
 
   openDialog(): void {
     this.email = "";
@@ -26,9 +30,38 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(input => {
       if (input != undefined) {
-        this.email = input.email;
-        this.item = input.item;
+        // this.email = input.email;
+        // this.item = input.item;
+
+        let requestModel: FindRequestModel = {
+          item: this.item,
+          email: this.email
+        };
+
+        this
+          .sendNewAuction(requestModel)
+          .subscribe(response => {
+            // TODO add toas for success
+            console.log(response);
+          });
       }
     });
+  }
+
+  private sendNewAuction(requestData: FindRequestModel): Observable<String> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+
+    return this
+      .http.post('http://localhost:8080/find', requestData, options)
+      .pipe(map(response => {
+        let body = response.json();
+
+        return body.response || {};
+      }))
+      .pipe(catchError(error => {
+        // TODO add toast for error here
+        return throwError(error);
+      }));
   }
 }

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -31,7 +31,8 @@ import {
 })
 export class MaterialModule { }
 
-import { HomeComponent, DialogComponent } from './home/home.component';
+import { HomeComponent } from './home/home.component';
+import { DialogComponent } from './home/dialog.component';
 import { AccountComponent } from './account/account.component';
 
 @NgModule({

@@ -1,10 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-export interface DialogData {
-  email: string;
-  item: string;
-}
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { DialogModel } from './dialogModel';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +18,7 @@ export class HomeComponent {
   openDialog(): void {
     this.email = "";
     this.item = "";
-    
+
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
       data: { item: this.item, email: this.email }
@@ -32,22 +29,6 @@ export class HomeComponent {
       this.email = input.email;
       this.item = input.item;
     });
-  }
-
-}
-
-@Component({
-  selector: 'app-dialog',
-  templateUrl: 'dialog.html',
-})
-export class DialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
 }

@@ -32,9 +32,6 @@ export class HomeComponent {
           email: input.email
         };
 
-        this.email = "";
-        this.item = "";
-
         this
           .sendNewAuction(requestModel)
           .subscribe(response => {
@@ -42,6 +39,9 @@ export class HomeComponent {
             console.log(response);
           });
       }
+
+      this.email = "";
+      this.item = "";
     });
   }
 

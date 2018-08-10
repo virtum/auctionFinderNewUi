@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DialogModel } from './dialogModel';
-import { DialogComponent } from './dialog.component';
+import { DialogModel } from './dialog/dialogModel';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -25,10 +25,10 @@ export class HomeComponent {
     });
 
     dialogRef.afterClosed().subscribe(input => {
-      console.log('The dialog was closed');
-      this.email = input.email;
-      this.item = input.item;
+      if (input != undefined) {
+        this.email = input.email;
+        this.item = input.item;
+      }
     });
   }
-
 }

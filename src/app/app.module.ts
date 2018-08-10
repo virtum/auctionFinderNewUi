@@ -32,7 +32,7 @@ import {
 export class MaterialModule { }
 
 import { HomeComponent } from './home/home.component';
-import { DialogComponent } from './home/dialog.component';
+import { DialogComponent } from './home/dialog/dialog.component';
 import { AccountComponent } from './account/account.component';
 
 @NgModule({

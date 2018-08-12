@@ -26,8 +26,8 @@ export class HomeComponent {
     });
 
     dialogRef.afterClosed().subscribe(input => {
-      if (input != undefined) {
-        let requestModel: FindRequestModel = {
+      if (input !== undefined) {
+        const requestModel: FindRequestModel = {
           item: input.item,
           email: input.email
         };
@@ -40,25 +40,25 @@ export class HomeComponent {
           });
       }
 
-      this.email = "";
-      this.item = "";
+      this.email = '';
+      this.item = '';
     });
   }
 
   private sendNewAuction(requestData: FindRequestModel): Observable<String> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this
       .http.post('http://localhost:8080/find', requestData, options)
       .pipe(map(response => {
-        let body = response.json();
+        const body = response.json();
 
         return body.response || {};
       }))
       .pipe(catchError(error => {
         // TODO add toast for error here
-        this.snackBar.open("message", "action", {
+        this.snackBar.open('message', 'action', {
           duration: 4000,
           panelClass: ['red-snackbar']
         });

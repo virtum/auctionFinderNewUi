@@ -6,6 +6,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { Http } from '@angular/http';
 import { map, catchError } from 'rxjs/operators';
 import { FindRequestModel } from './findRequestModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent {
   email: string;
   item: string;
 
-  constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private http: Http) { }
+  constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private http: Http, private toast: ToastrService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -35,7 +36,7 @@ export class HomeComponent {
         this
           .sendNewAuction(requestModel)
           .subscribe(response => {
-            // TODO add toast for success
+            this.showSuccess();
             console.log(response);
           });
       }
@@ -57,13 +58,17 @@ export class HomeComponent {
         return body.response || {};
       }))
       .pipe(catchError(error => {
-        // TODO add toast for error here
-        this.snackBar.open('message', 'action', {
-          duration: 4000,
-          panelClass: ['red-snackbar']
-        });
+        this.showError();
 
         return throwError(error);
       }));
+  }
+
+  private showSuccess() {
+    this.toast.success('Subskrypcja została stworzona!', 'Sukces!', { timeOut: 4000 });
+  }
+
+  private showError() {
+    this.toast.error('Subskrypcja nie została dodana, spróbuj ponownie!', 'Oops!', { timeOut: 4000 });
   }
 }

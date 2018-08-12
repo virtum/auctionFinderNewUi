@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -52,6 +54,8 @@ import { AccountComponent } from './account/account.component';
     LayoutModule,
     FormsModule,
     HttpModule,
+    CommonModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'account', component: AccountComponent },

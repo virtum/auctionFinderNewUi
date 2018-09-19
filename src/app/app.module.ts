@@ -2,10 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { LoginService } from './login/login.service';
+import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
+import { FacebookModule } from 'ngx-facebook';
+import { AuthGuard } from './guard/authGuard.service';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
@@ -43,7 +48,8 @@ import { AccountComponent } from './account/account.component';
     SideNavComponent,
     HomeComponent,
     DialogComponent,
-    AccountComponent
+    AccountComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -53,16 +59,19 @@ import { AccountComponent } from './account/account.component';
     FormsModule,
     HttpModule,
     CommonModule,
+    LocalStorageModule.withConfig({ storageType: 'localStorage' }),
     ToastrModule.forRoot(),
+    FacebookModule.forRoot(),
     RouterModule.forRoot([
+      { path: 'login', component: LoginComponent },
       { path: 'home', component: HomeComponent },
-      { path: 'account', component: AccountComponent },
+      { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ])
   ],
   entryComponents: [HomeComponent, DialogComponent],
-  providers: [],
+  providers: [LocalStorageService, LoginService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,6 +22,7 @@ export class SideNavComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, private localStorageService: LocalStorageService, private loginService: LoginService, private logoutService: LogoutService) {
     this.isLogged.next(<boolean>this.localStorageService.get('isLogged'));
+    console.log(this.localStorageService.get('isLogged'));
   }
 
   login() {

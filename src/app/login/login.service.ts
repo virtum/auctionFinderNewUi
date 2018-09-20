@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
+import { FacebookService, LoginResponse } from 'ngx-facebook';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 @Injectable()
@@ -16,19 +16,11 @@ export class LoginService {
     }
 
     initialFacebookService() {
-        const initParams: InitParams = {
+        this.fb.init({
             appId: '1722165054742491',
             xfbml: true,
             version: 'v2.8'
-        };
-
-        this.fb.init(initParams);
-
-        // this.fb.init({
-        //     appId: '1722165054742491',
-        //     xfbml: true,
-        //     version: 'v2.8'
-        // });
+        });
     }
 
     login(isLogged: BehaviorSubject<boolean>) {

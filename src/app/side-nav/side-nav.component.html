@@ -5,8 +5,8 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/home']">Home</a>
       <a mat-list-item *ngIf="(isLogged | async)" [routerLink]="['/account']">Account</a>
-      <a mat-list-item *ngIf="!(isLogged | async)" [routerLink]="['/login']">Login</a>
-      <a mat-list-item *ngIf="(isLogged | async)" [routerLink]="['/logout']">Logout</a>
+      <a mat-list-item *ngIf="!(isLogged | async)" [routerLink]="['/login']" (click)="login()">Login</a>
+      <a mat-list-item *ngIf="(isLogged | async)" [routerLink]="['/logout']" (click)="logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

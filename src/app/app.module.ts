@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { LoginService } from './login/login.service';
 import { LoginComponent } from './login/login.component';
+import { LogoutService } from './logout/logout.service';
 import { AppComponent } from './app.component';
 import { FacebookModule } from 'ngx-facebook';
 import { AuthGuard } from './guard/authGuard.service';
@@ -71,7 +72,7 @@ import { AccountComponent } from './account/account.component';
     ])
   ],
   entryComponents: [HomeComponent, DialogComponent],
-  providers: [LocalStorageService, LoginService, AuthGuard],
+  providers: [LocalStorageService, LoginService, AuthGuard, LogoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { LogoutService } from '../logout/logout.service';
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
+
+@Injectable()
 export class SideNavComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

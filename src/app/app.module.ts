@@ -73,6 +73,6 @@ import { AccountComponent } from './account/account.component';
   ],
   entryComponents: [HomeComponent, DialogComponent],
   providers: [AuthGuard, LocalStorageService, LoginComponent, LoginService, LogoutService, AppComponent, SideNavComponent],
-  bootstrap: [AppComponent, SideNavComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,7 +10,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
   styleUrls: ['./side-nav.component.css']
 })
 
-@Injectable()
 export class SideNavComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -22,6 +21,6 @@ export class SideNavComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, private localStorageService: LocalStorageService) {
     this.isLogged.next(<boolean>this.localStorageService.get('isLogged'));
-    console.log('sidenav logged: ' + this.localStorageService.get('isLogged'));
+    console.log('sidenav component logged: ' + this.localStorageService.get('isLogged'));
   }
 }

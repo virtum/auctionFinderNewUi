@@ -12,7 +12,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class LoginService {
 
     constructor(private fb: FacebookService, private http: Http, private router: Router, private localStorageService: LocalStorageService) {
-        console.log('login ctor: logged: ' + this.localStorageService.get('isLogged'));
+        console.log('login service ctor: logged: ' + this.localStorageService.get('isLogged'));
         this.initialFacebookService();
     }
 
@@ -26,7 +26,7 @@ export class LoginService {
 
     login(isLogged: BehaviorSubject<boolean>) {
         if (!this.localStorageService.get('isLogged')) {
-            console.log('login login before: logged: ' + this.localStorageService.get('isLogged'));
+            console.log('login service login before: logged: ' + this.localStorageService.get('isLogged'));
             this.fb.login()
                 .then((res: LoginResponse) => {
                     console.log(res.authResponse.accessToken);

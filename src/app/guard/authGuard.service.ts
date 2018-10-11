@@ -11,17 +11,19 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
 
     constructor(private router: Router, private http: Http, private localStorageService: LocalStorageService) {
+        console.log('authGuard ctor: logged: ' + this.localStorageService.get('isLogged'));
         this.isUserLogged().subscribe(res => {
             this.localStorageService.set('isLogged', res.logged);
-        }
-        );
+        });
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        console.log('authGuard canActivate: logged: ' + this.localStorageService.get('isLogged'));
         return this.checkLoggedIn(state.url);
     }
 
     checkLoggedIn(returnUrl): boolean {
+        console.log('authGuard checkLoggedIn: logged: ' + this.localStorageService.get('isLogged'));
         if (this.localStorageService.get('isLogged')) {
             return true;
         }
@@ -30,6 +32,7 @@ export class AuthGuard implements CanActivate {
     }
 
     private isUserLogged() {
+        console.log('authGuard isUserLogged: logged: ' + this.localStorageService.get('isLogged'));
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers, withCredentials: true });
         return this.http.get('http://localhost:8080/isLogged', options)

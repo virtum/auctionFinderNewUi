@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { FacebookService } from 'ngx-facebook';
@@ -12,12 +12,14 @@ export class LogoutService {
 
     constructor(private http: Http, private router: Router, private localStorageService: LocalStorageService, private fb: FacebookService) { }
 
-    logout() {
+    logout(isLogged: BehaviorSubject<boolean>) {
+        console.log('logout service logged: ' + this.localStorageService.get('isLogged'));
         this.logoutUser().subscribe(res => {
             this.localStorageService.set('isLogged', false);
-            this.fb.logout();
+            isLogged.next(false);
             this.router.navigate(['/home']);
         });
+
     }
 
     private logoutUser() {

@@ -11,7 +11,8 @@ import { LocalStorageService } from 'angular-2-local-storage';
 @Injectable()
 export class LoginService {
 
-    constructor(private fb: FacebookService, private http: Http, private router: Router, private localStorageService: LocalStorageService, ) {
+    constructor(private fb: FacebookService, private http: Http, private router: Router, private localStorageService: LocalStorageService) {
+        console.log('login ctor: logged: ' + this.localStorageService.get('isLogged'));
         this.initialFacebookService();
     }
 
@@ -24,17 +25,22 @@ export class LoginService {
     }
 
     login(isLogged: BehaviorSubject<boolean>) {
-        this.fb.login()
-            .then((res: LoginResponse) => {
-                console.log(res.authResponse.accessToken);
-                this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
-                    this.localStorageService.set('isLogged', true);
-                    isLogged.next(true);
-                    this.router.navigateByUrl('/account');
-                }
-                );
-            })
-            .catch(this.handleError);
+        if (!this.localStorageService.get('isLogged')) {
+            console.log('login login before: logged: ' + this.localStorageService.get('isLogged'));
+            this.fb.login()
+                .then((res: LoginResponse) => {
+                    console.log(res.authResponse.accessToken);
+                    this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
+                        this.localStorageService.set('isLogged', true);
+                        isLogged.next(true);
+                        this.router.navigateByUrl('/account');
+                        console.log('login login after: logged: ' + this.localStorageService.get('isLogged'));
+                    });
+                })
+                .catch(this.handleError);
+        } else {
+            this.router.navigateByUrl('/account');
+        }
     }
 
     sendAccessToken(accessToken): Observable<String> {

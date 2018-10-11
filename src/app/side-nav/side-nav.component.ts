@@ -3,8 +3,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { LoginService } from '../login/login.service';
-import { LogoutService } from '../logout/logout.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -22,17 +20,8 @@ export class SideNavComponent {
 
   public isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private breakpointObserver: BreakpointObserver, private localStorageService: LocalStorageService, private loginService: LoginService, private logoutService: LogoutService) {
+  constructor(private breakpointObserver: BreakpointObserver, private localStorageService: LocalStorageService) {
     this.isLogged.next(<boolean>this.localStorageService.get('isLogged'));
     console.log('sidenav logged: ' + this.localStorageService.get('isLogged'));
-  }
-
-  login() {
-    this.loginService.login(this.isLogged);
-  }
-
-  logout() {
-    this.logoutService.logout();
-    this.isLogged.next(false);
   }
 }

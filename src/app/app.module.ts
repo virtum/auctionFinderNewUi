@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { LoginService } from './login/login.service';
 import { LoginComponent } from './login/login.component';
 import { LogoutService } from './logout/logout.service';
+import { LogoutComponent } from './logout/logout.component';
 import { AppComponent } from './app.component';
 import { FacebookModule } from 'ngx-facebook';
 import { AuthGuard } from './guard/authGuard.service';
@@ -50,7 +51,8 @@ import { AccountComponent } from './account/account.component';
     HomeComponent,
     DialogComponent,
     AccountComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -65,14 +67,15 @@ import { AccountComponent } from './account/account.component';
     FacebookModule.forRoot(),
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
+      { path: 'logout', component: LogoutComponent },
       { path: 'home', component: HomeComponent },
       { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ])
   ],
-  entryComponents: [HomeComponent, DialogComponent],
-  providers: [AuthGuard, LocalStorageService, LoginComponent, LoginService, LogoutService, AppComponent, SideNavComponent],
+  entryComponents: [DialogComponent],
+  providers: [AuthGuard, LocalStorageService, LoginService, LogoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

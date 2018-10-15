@@ -6,13 +6,12 @@ import { Observable, throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { FacebookService, LoginResponse } from 'ngx-facebook';
-import { LocalStorageService } from 'angular-2-local-storage';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable()
 export class LoginService {
 
-    constructor(private fb: FacebookService, private http: Http, private router: Router, private localStorageService: LocalStorageService) {
-        console.log('login service ctor: logged: ' + this.localStorageService.get('isLogged'));
+    constructor(private fb: FacebookService, private http: Http, private router: Router, protected localStorage: LocalStorage) {
         this.initialFacebookService();
     }
 
@@ -25,22 +24,18 @@ export class LoginService {
     }
 
     login(isLogged: BehaviorSubject<boolean>) {
-        if (!this.localStorageService.get('isLogged')) {
-            console.log('login service login before: logged: ' + this.localStorageService.get('isLogged'));
-            this.fb.login()
-                .then((res: LoginResponse) => {
-                    console.log(res.authResponse.accessToken);
-                    this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
-                        this.localStorageService.set('isLogged', true);
-                        isLogged.next(true);
-                        this.router.navigateByUrl('/account');
-                        console.log('login login after: logged: ' + this.localStorageService.get('isLogged'));
-                    });
-                })
-                .catch(this.handleError);
-        } else {
-            this.router.navigateByUrl('/account');
-        }
+        this.fb.login()
+            .then((res: LoginResponse) => {
+                console.log(res.authResponse.accessToken);
+                this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
+                    // this.localStorageService.set('isLogged', true);
+                    this.localStorage.setItemSubscribe('logged', true);
+                    this.localStorage.setItemSubscribe('isLogged', true);
+                    isLogged.next(true);
+                    this.router.navigateByUrl('/account');
+                });
+            })
+            .catch(this.handleError);
     }
 
     sendAccessToken(accessToken): Observable<String> {

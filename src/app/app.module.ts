@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
-import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -62,7 +61,6 @@ import { AccountComponent } from './account/account.component';
     FormsModule,
     HttpModule,
     CommonModule,
-    LocalStorageModule.withConfig({ storageType: 'localStorage' }),
     ToastrModule.forRoot(),
     FacebookModule.forRoot(),
     RouterModule.forRoot([
@@ -75,7 +73,7 @@ import { AccountComponent } from './account/account.component';
     ])
   ],
   entryComponents: [DialogComponent],
-  providers: [AuthGuard, LocalStorageService, LoginService, LogoutService],
+  providers: [AuthGuard, LoginService, LogoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

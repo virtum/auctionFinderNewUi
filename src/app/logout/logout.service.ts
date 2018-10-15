@@ -4,18 +4,18 @@ import { Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { LocalStorageService } from 'angular-2-local-storage';
 import { FacebookService } from 'ngx-facebook';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable()
 export class LogoutService {
 
-    constructor(private http: Http, private router: Router, private localStorageService: LocalStorageService, private fb: FacebookService) { }
+    constructor(private http: Http, private router: Router, private fb: FacebookService, protected localStorage: LocalStorage) { }
 
     logout(isLogged: BehaviorSubject<boolean>) {
-        console.log('logout service logged: ' + this.localStorageService.get('isLogged'));
         this.logoutUser().subscribe(res => {
-            this.localStorageService.set('isLogged', false);
+            // this.localStorageService.set('isLogged', false);
+            this.localStorage.setItemSubscribe('logged', false);
             isLogged.next(false);
             this.router.navigate(['/home']);
         });

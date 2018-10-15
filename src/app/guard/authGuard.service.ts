@@ -2,37 +2,62 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
-import { LocalStorageService } from 'angular-2-local-storage';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private router: Router, private http: Http, private localStorageService: LocalStorageService) {
-        console.log('authGuard ctor: logged: ' + this.localStorageService.get('isLogged'));
+    constructor(private router: Router, private http: Http, protected localStorage: LocalStorage) {
         this.isUserLogged().subscribe(res => {
-            this.localStorageService.set('isLogged', res.logged);
+            // this.localStorageService.set('isLogged', res.logged);
+            this.localStorage.setItemSubscribe('logged', res.logged);
         });
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        console.log('authGuard canActivate: logged: ' + this.localStorageService.get('isLogged'));
-        return this.checkLoggedIn(state.url);
+    // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    //     return this.checkLoggedIn(state.url);
+    // }
+
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        // return this.localStorage.getItem('logged')
+        // .catch(() => {
+        //     this.router.navigate(['/login']);
+        //     return Observable.of(false);
+        // });
+
+        return this.localStorage.getItem('logged')
+            .pipe(map(logged => {
+                console.log('canActivate map:' + logged);
+                if (logged) {
+                    return true;
+                }
+                this.router.navigate(['/login']);
+
+                return false;
+            }))
+            .pipe(catchError(error => {
+                console.log('canActivate error:');
+                this.router.navigate(['/login']);
+
+                return of(false);
+            }));
     }
 
-    checkLoggedIn(returnUrl): boolean {
-        console.log('authGuard checkLoggedIn: logged: ' + this.localStorageService.get('isLogged'));
-        if (this.localStorageService.get('isLogged')) {
-            return true;
-        }
-        this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
-        return false;
+    checkLoggedIn(returnUrl) {
+        this.localStorage.getItem('logged').subscribe((logged) => {
+            if (logged) {
+                return true;
+            }
+            this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
+            return false;
+        });
     }
 
     private isUserLogged() {
-        console.log('authGuard isUserLogged: logged: ' + this.localStorageService.get('isLogged'));
+        // console.log('authGuard isUserLogged: logged: ' + this.localStorageService.get('isLogged'));
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers, withCredentials: true });
         return this.http.get('http://localhost:8080/isLogged', options)

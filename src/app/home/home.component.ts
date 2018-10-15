@@ -7,7 +7,6 @@ import { Http } from '@angular/http';
 import { map, catchError } from 'rxjs/operators';
 import { FindRequestModel } from './findRequestModel';
 import { ToastrService } from 'ngx-toastr';
-import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +18,7 @@ export class HomeComponent {
   email: string;
   item: string;
 
-  constructor(public dialog: MatDialog, private http: Http, private toast: ToastrService, private localStorageService: LocalStorageService) { }
+  constructor(public dialog: MatDialog, private http: Http, private toast: ToastrService) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {

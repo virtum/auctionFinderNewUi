@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from 'angular-2-local-storage';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,9 @@ import { LocalStorageService } from 'angular-2-local-storage';
 
 export class AppComponent {
 
-  constructor(private localStorageService: LocalStorageService) {
-    console.log('appComponent ctor: logged: ' + localStorageService.get('isLogged'));
+  // public isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  constructor() {
+    // this.isLogged.next(<boolean>this.localStorageService.get('isLogged'));
   }
 }

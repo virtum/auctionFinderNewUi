@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-account',
@@ -8,7 +7,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class AccountComponent {
 
-  constructor(private localStorageService: LocalStorageService) {
-    console.log('account logged: ' + this.localStorageService.get('isLogged'));
+  constructor() {
   }
 }

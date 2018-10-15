@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LocalStorageService } from 'angular-2-local-storage';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'app-side-nav',
@@ -17,10 +17,12 @@ export class SideNavComponent {
       map(result => result.matches)
     );
 
+  // TODO maybe private?
   public isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private breakpointObserver: BreakpointObserver, private localStorageService: LocalStorageService) {
-    this.isLogged.next(<boolean>this.localStorageService.get('isLogged'));
-    console.log('sidenav component logged: ' + this.localStorageService.get('isLogged'));
+  constructor(private breakpointObserver: BreakpointObserver, protected localStorage: LocalStorage) {
+    this.localStorage.getItem('logged').subscribe((logged) => {
+      this.isLogged.next(logged);
+    });
   }
 }

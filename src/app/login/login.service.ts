@@ -30,7 +30,6 @@ export class LoginService {
                 this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
                     // this.localStorageService.set('isLogged', true);
                     this.localStorage.setItemSubscribe('logged', true);
-                    this.localStorage.setItemSubscribe('isLogged', true);
                     isLogged.next(true);
                     this.router.navigateByUrl('/account');
                 });

@@ -17,7 +17,11 @@ export class LogoutService {
             // this.localStorageService.set('isLogged', false);
             this.localStorage.setItemSubscribe('logged', false);
             isLogged.next(false);
-            this.router.navigate(['/home']);
+            this.router.navigateByUrl('/home');
+
+            this.localStorage.getItem('logged').subscribe((logged) => {
+                console.log('logout subscribe logged: ' + logged);
+              });
         });
 
     }

@@ -22,6 +22,7 @@ export class SideNavComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, protected localStorage: LocalStorage) {
     this.localStorage.getItem('logged').subscribe((logged) => {
+      console.log('sidenav subscribe logged: ' + logged);
       this.isLogged.next(logged);
     });
   }

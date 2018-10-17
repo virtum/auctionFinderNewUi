@@ -24,17 +24,22 @@ export class LoginService {
     }
 
     login(isLogged: BehaviorSubject<boolean>) {
-        this.fb.login()
-            .then((res: LoginResponse) => {
-                console.log(res.authResponse.accessToken);
-                this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
-                    // this.localStorageService.set('isLogged', true);
-                    this.localStorage.setItemSubscribe('logged', true);
-                    isLogged.next(true);
-                    this.router.navigateByUrl('/account');
-                });
-            })
-            .catch(this.handleError);
+        this.localStorage.getItem('logged').subscribe((logged) => {
+            if (!logged) {
+                this.fb.login()
+                    .then((res: LoginResponse) => {
+                        console.log(res.authResponse.accessToken);
+                        this.sendAccessToken(res.authResponse.accessToken).subscribe(res => {
+                            // this.localStorageService.set('isLogged', true);
+                            this.localStorage.setItemSubscribe('logged', true);
+                            isLogged.next(true);
+                            this.router.navigateByUrl('/account');
+                        });
+                    })
+                    .catch(this.handleError);
+            }
+            this.router.navigateByUrl('/account');
+        });
     }
 
     sendAccessToken(accessToken): Observable<String> {

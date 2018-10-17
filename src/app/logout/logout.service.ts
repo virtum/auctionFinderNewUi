@@ -13,15 +13,17 @@ export class LogoutService {
     constructor(private http: Http, private router: Router, private fb: FacebookService, protected localStorage: LocalStorage) { }
 
     logout(isLogged: BehaviorSubject<boolean>) {
-        this.logoutUser().subscribe(res => {
-            // this.localStorageService.set('isLogged', false);
-            this.localStorage.setItemSubscribe('logged', false);
-            isLogged.next(false);
-            this.router.navigateByUrl('/home');
+        this.localStorage.getItem('logged').subscribe((logged) => {
+            console.log('logout subscribe logged: ' + logged);
 
-            this.localStorage.getItem('logged').subscribe((logged) => {
-                console.log('logout subscribe logged: ' + logged);
-              });
+            if (logged) {
+                this.logoutUser().subscribe(res => {
+                    // this.localStorageService.set('isLogged', false);
+                    this.localStorage.setItemSubscribe('logged', false);
+                    isLogged.next(false);
+                });
+            }
+            this.router.navigateByUrl('/home');
         });
 
     }

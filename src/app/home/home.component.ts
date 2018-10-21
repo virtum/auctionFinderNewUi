@@ -56,8 +56,7 @@ export class HomeComponent {
         const body = response.json();
 
         return body.response || {};
-      }))
-      .pipe(catchError(error => {
+      }), catchError(error => {
         this.showError();
 
         return throwError(error);

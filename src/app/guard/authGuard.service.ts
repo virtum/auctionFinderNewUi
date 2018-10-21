@@ -37,8 +37,7 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/login']);
 
                 return false;
-            }))
-            .pipe(catchError(error => {
+            }), catchError(error => {
                 console.log('canActivate error:');
                 this.router.navigate(['/login']);
 
@@ -65,8 +64,7 @@ export class AuthGuard implements CanActivate {
                 const body = response.json();
 
                 return body.response || {};
-            }))
-            .pipe(catchError(error => {
+            }), catchError(error => {
                 this.handleError(error);
 
                 return throwError(error);

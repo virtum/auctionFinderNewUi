@@ -36,8 +36,7 @@ export class LogoutService {
             .pipe(map(response => {
                 const body = response.json();
                 return body.response || {};
-            }))
-            .pipe(catchError(error => {
+            }), catchError(error => {
                 this.handleError(error);
                 return throwError(error);
             }));

@@ -23,7 +23,9 @@ import {
   MatListModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatTableModule,
+  MatSlideToggleModule
 } from '@angular/material';
 @NgModule({
   exports: [
@@ -34,7 +36,9 @@ import {
     MatListModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }
@@ -42,6 +46,8 @@ export class MaterialModule { }
 import { HomeComponent } from './home/home.component';
 import { DialogComponent } from './home/dialog/dialog.component';
 import { AccountComponent } from './account/account.component';
+import { TableBasicExample } from './table/table-basic-example';
+import { CdkDetailRowDirective } from './table/cdk-detail-row.directive';
 
 @NgModule({
   declarations: [
@@ -51,7 +57,9 @@ import { AccountComponent } from './account/account.component';
     DialogComponent,
     AccountComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    TableBasicExample,
+    CdkDetailRowDirective
   ],
   imports: [
     BrowserModule,
@@ -65,6 +73,7 @@ import { AccountComponent } from './account/account.component';
     FacebookModule.forRoot(),
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
+      { path: 'table', component: TableBasicExample },
       { path: 'logout', component: LogoutComponent },
       { path: 'home', component: HomeComponent },
       { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },

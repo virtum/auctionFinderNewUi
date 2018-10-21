@@ -34,12 +34,12 @@ export class AuthGuard implements CanActivate {
                 if (logged) {
                     return true;
                 }
-                this.router.navigate(['/login']);
+                this.router.navigateByUrl('/login');
 
                 return false;
             }), catchError(error => {
                 console.log('canActivate error:');
-                this.router.navigate(['/login']);
+                this.router.navigateByUrl('/login');
 
                 return of(false);
             }));
@@ -50,7 +50,7 @@ export class AuthGuard implements CanActivate {
             if (logged) {
                 return true;
             }
-            this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
+            this.router.navigateByUrl('/login', { queryParams: { returnUrl: returnUrl } });
             return false;
         });
     }

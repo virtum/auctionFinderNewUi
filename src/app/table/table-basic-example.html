@@ -1,48 +1,37 @@
-<mat-slide-toggle [checked]="singleChildRowDetail" (change)="singleChildRowDetail = $event.checked">
-    Force Single Child Row Detail
-  </mat-slide-toggle>
-  <p>This demo implementation of single child row force does not support previous state, enable when all rows are closed.</p>
-  
-  <div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource">
-  
-      <!--- Note that these columns can be defined in any order.
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"
-              matRipple 
-              class="element-row"
-              [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl"
-              (toggleChange)="onToggleChange($event)">
-      </mat-row>
-    </mat-table>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef> Liczba znalezionych aukcji </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="creationDate">
+      <mat-header-cell *matHeaderCellDef> Data utworzenia </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.creationDate}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl"
+      (toggleChange)="onToggleChange($event)">
+    </mat-row>
+  </mat-table>
+</div>
+
+<ng-template #tpl let-element>
+  <div class="mat-row" [@detailExpand] style="overflow: hidden">
+    The symbol for {{element.name}} is {{element.symbol}}
   </div>
-  
-  <ng-template #tpl let-element>
-    <div class="mat-row" [@detailExpand] style="overflow: hidden">
-        The symbol for {{element.name}} is {{element.symbol}}
-    </div>
-  </ng-template>
-  
-  <!-- Copyright 2017 Google Inc. All Rights Reserved.
+</ng-template>
+
+<!-- Copyright 2017 Google Inc. All Rights Reserved.
       Use of this source code is governed by an MIT-style license that
       can be found in the LICENSE file at http://angular.io/license -->

@@ -21,7 +21,7 @@ import { CdkDetailRowDirective } from './cdk-detail-row.directive';
     ],
 })
 export class TableBasicExample {
-    displayedColumns = ['name', 'weight', 'creationDate'];
+    displayedColumns = ['itemName', 'numberOfFoundItems', 'creationDate'];
     dataSource = new ExampleDataSource();
 
     isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
@@ -38,33 +38,33 @@ export class TableBasicExample {
 }
 
 export interface Element {
-    name: string;
-    weight: number;
+    itemName: string;
+    numberOfFoundItems: number;
     creationDate: string;
     symbol: string;
 }
 
 const data: Element[] = [
-    { name: 'Hydrogen', weight: 1.0079, creationDate: '2018-08-08', symbol: 'H' },
-    { name: 'Helium', weight: 4.0026, creationDate: '2018-08-08', symbol: 'He' },
-    { name: 'Lithium', weight: 6.941, creationDate: '2018-08-08', symbol: 'Li' },
-    { name: 'Beryllium', weight: 9.0122, creationDate: '2018-08-08', symbol: 'Be' },
-    { name: 'Boron', weight: 10.811, creationDate: '2018-08-08', symbol: 'B' },
-    { name: 'Carbon', weight: 12.0107, creationDate: '2018-08-08', symbol: 'C' },
-    { name: 'Nitrogen', weight: 14.0067, creationDate: '2018-08-08', symbol: 'N' },
-    { name: 'Oxygen', weight: 15.9994, creationDate: '2018-08-08', symbol: 'O' },
-    { name: 'Fluorine', weight: 18.9984, creationDate: '2018-08-08', symbol: 'F' },
-    { name: 'Neon', weight: 20.1797, creationDate: '2018-08-08', symbol: 'Ne' },
-    { name: 'Sodium', weight: 22.9897, creationDate: '2018-08-08', symbol: 'Na' },
-    { name: 'Magnesium', weight: 24.305, creationDate: '2018-08-08', symbol: 'Mg' },
-    { name: 'Aluminum', weight: 26.9815, creationDate: '2018-08-08', symbol: 'Al' },
-    { name: 'Silicon', weight: 28.0855, creationDate: '2018-08-08', symbol: 'Si' },
-    { name: 'Phosphorus', weight: 30.9738, creationDate: '2018-08-08', symbol: 'P' },
-    { name: 'Sulfur', weight: 32.065, creationDate: '2018-08-08', symbol: 'S' },
-    { name: 'Chlorine', weight: 35.453, creationDate: '2018-08-08', symbol: 'Cl' },
-    { name: 'Argon', weight: 39.948, creationDate: '2018-08-08', symbol: 'Ar' },
-    { name: 'Potassium', weight: 39.0983, creationDate: '2018-08-08', symbol: 'K' },
-    { name: 'Calcium', weight: 40.078, creationDate: '2018-08-08', symbol: 'Ca' },
+    { itemName: 'Hydrogen', numberOfFoundItems: 1.0079, creationDate: '2018-08-08', symbol: 'H' },
+    { itemName: 'Helium', numberOfFoundItems: 4.0026, creationDate: '2018-08-08', symbol: 'He' },
+    { itemName: 'Lithium', numberOfFoundItems: 6.941, creationDate: '2018-08-08', symbol: 'Li' },
+    { itemName: 'Beryllium', numberOfFoundItems: 9.0122, creationDate: '2018-08-08', symbol: 'Be' },
+    { itemName: 'Boron', numberOfFoundItems: 10.811, creationDate: '2018-08-08', symbol: 'B' },
+    { itemName: 'Carbon', numberOfFoundItems: 12.0107, creationDate: '2018-08-08', symbol: 'C' },
+    { itemName: 'Nitrogen', numberOfFoundItems: 14.0067, creationDate: '2018-08-08', symbol: 'N' },
+    { itemName: 'Oxygen', numberOfFoundItems: 15.9994, creationDate: '2018-08-08', symbol: 'O' },
+    { itemName: 'Fluorine', numberOfFoundItems: 18.9984, creationDate: '2018-08-08', symbol: 'F' },
+    { itemName: 'Neon', numberOfFoundItems: 20.1797, creationDate: '2018-08-08', symbol: 'Ne' },
+    { itemName: 'Sodium', numberOfFoundItems: 22.9897, creationDate: '2018-08-08', symbol: 'Na' },
+    { itemName: 'Magnesium', numberOfFoundItems: 24.305, creationDate: '2018-08-08', symbol: 'Mg' },
+    { itemName: 'Aluminum', numberOfFoundItems: 26.9815, creationDate: '2018-08-08', symbol: 'Al' },
+    { itemName: 'Silicon', numberOfFoundItems: 28.0855, creationDate: '2018-08-08', symbol: 'Si' },
+    { itemName: 'Phosphorus', numberOfFoundItems: 30.9738, creationDate: '2018-08-08', symbol: 'P' },
+    { itemName: 'Sulfur', numberOfFoundItems: 32.065, creationDate: '2018-08-08', symbol: 'S' },
+    { itemName: 'Chlorine', numberOfFoundItems: 35.453, creationDate: '2018-08-08', symbol: 'Cl' },
+    { itemName: 'Argon', numberOfFoundItems: 39.948, creationDate: '2018-08-08', symbol: 'Ar' },
+    { itemName: 'Potassium', numberOfFoundItems: 39.0983, creationDate: '2018-08-08', symbol: 'K' },
+    { itemName: 'Calcium', numberOfFoundItems: 40.078, creationDate: '2018-08-08', symbol: 'Ca' },
 ];
 
 /**

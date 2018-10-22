@@ -4,14 +4,14 @@
     <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="itemName">
       <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.itemName}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="weight">
+    <ng-container matColumnDef="numberOfFoundItems">
       <mat-header-cell *matHeaderCellDef> Liczba znalezionych aukcji </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.numberOfFoundItems}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="creationDate">

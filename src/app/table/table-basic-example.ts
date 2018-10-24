@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
+import { map, catchError } from 'rxjs/operators';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { CdkDetailRowDirective } from './cdk-detail-row.directive';
 
 /**
@@ -22,13 +23,17 @@ import { CdkDetailRowDirective } from './cdk-detail-row.directive';
 })
 export class TableBasicExample {
     displayedColumns = ['itemName', 'numberOfFoundItems', 'creationDate'];
-    dataSource = new ExampleDataSource();
+    dataSource = new ExampleDataSource(this.http);
 
     isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
     private singleChildRowDetail: boolean = false;
 
     private openedRow: CdkDetailRowDirective
+
+    constructor(private http: Http) { }
+
+
     onToggleChange(cdkDetailRow: CdkDetailRowDirective): void {
         if (this.singleChildRowDetail && this.openedRow && this.openedRow.expended) {
             this.openedRow.toggle();
@@ -37,35 +42,12 @@ export class TableBasicExample {
     }
 }
 
-export interface Element {
+export interface UserSubscriptions {
     itemName: string;
     numberOfFoundItems: number;
     creationDate: string;
     symbol: string;
 }
-
-const data: Element[] = [
-    { itemName: 'Hydrogen', numberOfFoundItems: 1.0079, creationDate: '2018-08-08', symbol: 'H' },
-    { itemName: 'Helium', numberOfFoundItems: 4.0026, creationDate: '2018-08-08', symbol: 'He' },
-    { itemName: 'Lithium', numberOfFoundItems: 6.941, creationDate: '2018-08-08', symbol: 'Li' },
-    { itemName: 'Beryllium', numberOfFoundItems: 9.0122, creationDate: '2018-08-08', symbol: 'Be' },
-    { itemName: 'Boron', numberOfFoundItems: 10.811, creationDate: '2018-08-08', symbol: 'B' },
-    { itemName: 'Carbon', numberOfFoundItems: 12.0107, creationDate: '2018-08-08', symbol: 'C' },
-    { itemName: 'Nitrogen', numberOfFoundItems: 14.0067, creationDate: '2018-08-08', symbol: 'N' },
-    { itemName: 'Oxygen', numberOfFoundItems: 15.9994, creationDate: '2018-08-08', symbol: 'O' },
-    { itemName: 'Fluorine', numberOfFoundItems: 18.9984, creationDate: '2018-08-08', symbol: 'F' },
-    { itemName: 'Neon', numberOfFoundItems: 20.1797, creationDate: '2018-08-08', symbol: 'Ne' },
-    { itemName: 'Sodium', numberOfFoundItems: 22.9897, creationDate: '2018-08-08', symbol: 'Na' },
-    { itemName: 'Magnesium', numberOfFoundItems: 24.305, creationDate: '2018-08-08', symbol: 'Mg' },
-    { itemName: 'Aluminum', numberOfFoundItems: 26.9815, creationDate: '2018-08-08', symbol: 'Al' },
-    { itemName: 'Silicon', numberOfFoundItems: 28.0855, creationDate: '2018-08-08', symbol: 'Si' },
-    { itemName: 'Phosphorus', numberOfFoundItems: 30.9738, creationDate: '2018-08-08', symbol: 'P' },
-    { itemName: 'Sulfur', numberOfFoundItems: 32.065, creationDate: '2018-08-08', symbol: 'S' },
-    { itemName: 'Chlorine', numberOfFoundItems: 35.453, creationDate: '2018-08-08', symbol: 'Cl' },
-    { itemName: 'Argon', numberOfFoundItems: 39.948, creationDate: '2018-08-08', symbol: 'Ar' },
-    { itemName: 'Potassium', numberOfFoundItems: 39.0983, creationDate: '2018-08-08', symbol: 'K' },
-    { itemName: 'Calcium', numberOfFoundItems: 40.078, creationDate: '2018-08-08', symbol: 'Ca' },
-];
 
 /**
  * Data source to provide what data should be rendered in the table. The observable provided
@@ -74,15 +56,49 @@ const data: Element[] = [
  * we return a stream that contains only one set of data that doesn't change.
  */
 export class ExampleDataSource extends DataSource<any> {
+
+    constructor(private http: Http) {
+        super();
+    }
+
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<Element[]> {
-        return of(data);
+    connect(): Observable<UserSubscriptions[]> {
+        // this.getUserSubscriptions().subscribe();
+        // return of(data);
+        return this.getUserSubscriptions();
     }
 
     disconnect() { }
+
+    getUserSubscriptions(): Observable<UserSubscriptions[]> {
+        console.log('getting subscriptions');
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers, withCredentials: true });
+
+        return this.http
+            .get('http://localhost:8080/rest/subscriptions', options)
+            .pipe(map(response => {
+                const body = response.json();
+
+                console.log(body);
+
+                return body.userSubscriptions || [];
+            }), catchError(error => {
+                this.handleError(error);
+                return throwError(error);
+            }));
+    }
+
+    private handleError(error: Response | any) {
+        let errMsg: string;
+        if (error instanceof Response) {
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Observable.throw(errMsg);
+    }
 }
-
-
-/**  Copyright 2017 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license */

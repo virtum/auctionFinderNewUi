@@ -46,7 +46,7 @@ export interface UserSubscriptions {
     itemName: string;
     numberOfFoundItems: number;
     creationDate: string;
-    symbol: string;
+    urls: string[];
 }
 
 /**
@@ -63,8 +63,6 @@ export class ExampleDataSource extends DataSource<any> {
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
     connect(): Observable<UserSubscriptions[]> {
-        // this.getUserSubscriptions().subscribe();
-        // return of(data);
         return this.getUserSubscriptions();
     }
 

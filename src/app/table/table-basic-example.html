@@ -28,7 +28,9 @@
 
 <ng-template #tpl let-element>
   <div class="mat-row" [@detailExpand] style="overflow: hidden">
-    The symbol for {{element.name}} is {{element.symbol}}
+    <p *ngFor="let url of element.urls">
+      link: {{ url }}
+    </p>
   </div>
 </ng-template>
 
